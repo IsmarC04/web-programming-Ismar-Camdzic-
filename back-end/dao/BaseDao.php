@@ -1,5 +1,5 @@
 <?php 
-require_once '../config.php';
+require_once __DIR__ .'/../config.php';
 
 class BaseDao {
     protected $table;
@@ -34,8 +34,15 @@ class BaseDao {
 
     public function getById($id){
         $stm = $this->connection->prepare (" SELECT * FROM " . $this->table . " WHERE id=:id");
+        $stm->bindParam(':id', $id);
         $stm->execute();
         return $stm -> fetch();
+    }
+
+    public function query_unique($query, $params = []) {
+        $stm = $this->connection->prepare($query);
+        $stm->execute($params);
+        return $stm->fetch(PDO::FETCH_ASSOC);
     }
 
     public function insert($data){
@@ -69,10 +76,10 @@ class BaseDao {
 
 
     public function delete($id){
-        $stm  = $this->connection->prepare (" DELETE FROM " . $this->table . "WHERE id=:id");
-        $stm->bindParm(':id', $id);
-        return $stm->execute();
-    }
+    $stm = $this->connection->prepare("DELETE FROM " . $this->table . " WHERE id = :id");
+    $stm->bindParam(':id', $id, PDO::PARAM_INT);
+    return $stm->execute();
 }
 
-?>
+}
+

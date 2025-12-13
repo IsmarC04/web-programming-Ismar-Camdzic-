@@ -21,4 +21,9 @@ class Config {
     public static function DB_HOST() {
         return 'localhost';
     }
+
+    public static function JWT_SECRET(){
+        return 'ksdF9#Jf2!9SdfJ3kdf9@2JsdF#09';
+
+    }
 }

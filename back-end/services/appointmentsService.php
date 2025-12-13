@@ -5,7 +5,7 @@ require_once 'BaseService.php';
 
 class appointmentsService extends BaseService{
     public function __construct(){
-        $dao = new appointmentDao();
+        $dao = new appointmentsDao();
         parent::__construct($dao);
         
     }
@@ -44,20 +44,46 @@ class appointmentsService extends BaseService{
                 'message' => 'Invalid admin Id'
             ];
         }
+        if(empty($date)){
+            return [
+                'success' => false,
+                'message' => 'Date is required'
+            ];
+        }
 
-        $this->create([
-            'user_id' => $user_id,
-            'service_id' => $service_id,
-            'stylist_id' => $stylist_id,
-            'admin_id' => $admin_id
-        ]);
+    
 
-
-        return[
-            'success' => true,
-            'message' => 'New appointmnt registered'
-        ];
+        return ['success' => true];
 
     }
+
+    public function createAppointment($data){
+        $validation = $this->ValidateFields(
+            $data['user_id'] ?? null,
+            $data['service_id'] ?? null,
+            $data['stylist_id'] ?? null,
+            $data['admin_id'] ?? null,
+            $data['date']?? null
+        );
+
+        if(!$validation['success']){
+            return $validation;
+        }
+
+        return $this->dao->createAppointment($data);
+    }
+
+
+
+    
+
+    public function getAllAppointmentsForAdmin() {
+        return $this->dao->getAllAppointmentsForAdmin();
+    }
+
+    
+    
+
 }
+
 ?>
