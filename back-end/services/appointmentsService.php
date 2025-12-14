@@ -11,7 +11,7 @@ class appointmentsService extends BaseService{
     }
 
 
-    public function ValidateFields($user_id, $service_id, $stylist_id, $admin_id){
+    public function ValidateFields($user_id, $service_id, $stylist_id, $admin_id, $date){
         if(!is_numeric($user_id) || $user_id <= 0){
             return [
                 'success' => false,

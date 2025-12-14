@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-	Strongly Typed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
   <head>
     <title>Strongly Typed by HTML5 UP</title>
@@ -20,10 +15,12 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-
-    <script src="./assets/js/jquery.min.js"></script>
-    <script src="./assets/js/jquery.spapp.min.js"></script>
-    <script src="./assets/js/script.js"></script>
+    <!-- Toastr -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+    />
   </head>
   <body class="homepage is-preload">
     <div id="page-wrapper">
@@ -48,6 +45,7 @@
               <li><a href="#barberTeamAdmin">Barber team admin</a></li>
               <li><a href="#servicesAdmin">Services admin</a></li>
               <li><a href="#usersAdmin">Users Admin</a></li>
+              <li><a href="javascript:UserService.logout();">Logout</a></li>
             </ul>
           </nav>
         </div>
@@ -144,13 +142,22 @@
     <!-- Scripts -->
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <!-- Toastr -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"
+    ></script>
     <script src="./assets/js/browser.min.js"></script>
     <script src="./assets/js/breakpoints.min.js"></script>
     <script src="./assets/js/util.js"></script>
     <script src="./assets/js/main.js"></script>
     <script src="./assets/js/jquery.spapp.js"></script>
-
     <script src="./assets/js/script.js"></script>
+
+    <script src="./utils/constants.js"></script>
+    <script src="./utils/rest-client.js"></script>
+    <script src="./services/user-service.js"></script>
 
     <script>
       var app = $.spapp({

@@ -32,7 +32,6 @@
  * )
  */
 Flight::route('DELETE /admin/services/@id', function($id){
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     
     $success = Flight::servicesService()->delete($id);
@@ -85,7 +84,6 @@ Flight::route('DELETE /admin/services/@id', function($id){
  * )
  */
 Flight::route('PUT /admin/services/@id', function($id){
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $data = Flight::request()->data->getData(); // očekuje name i status iz frontend-a
 

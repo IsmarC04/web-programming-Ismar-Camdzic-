@@ -22,42 +22,52 @@
     Create your account. It's free and only take a minute.
   </p>
   <div id="registerMessage"></div>
-  <input
-    id="firstName"
-    placeholder="First Name"
-    style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
-  /><br />
-  <input
-    id="lastName"
-    placeholder="Last Name"
-    style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
-  /><br />
-  <input
-    id="registerEmail"
-    type="email"
-    placeholder="Email"
-    style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
-  /><br />
-  <input
-    id="registerPassword"
-    type="password"
-    placeholder="Password (min 8 characters)"
-    style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
-  /><br /><br />
-  <button
-    id="registerBtn"
-    style="
-      padding: 10px 20px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    "
-  >
-    Register Now
-  </button>
+  <form id="register-form">
+    <input
+      id="first_name"
+      name="first_name"
+      placeholder="First Name"
+      style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
+    /><br />
+    <input
+      id="last_name"
+      name="last_name"
+      placeholder="Last Name"
+      style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
+    /><br />
+    <input
+      id="registerEmail"
+      type="email"
+      name="email"
+      placeholder="Email"
+      style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
+    /><br />
+    <input
+      id="registerPassword"
+      type="password"
+      name="password"
+      placeholder="Password (min 8 characters)"
+      style="padding: 8px; width: 100%; margin: 10px 0; box-sizing: border-box"
+    /><br /><br />
+    <button
+      id="registerBtn"
+      style="
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      "
+    >
+      Register Now
+    </button>
+  </form>
   <p style="text-align: center; margin-top: 20px">
     Već imate račun? <a href="#login">Login</a>
   </p>
 </div>
+
+<script>
+  UserService.init();
+</script>

@@ -28,7 +28,6 @@
  * )
  */
 Flight::route('POST /appointments', function(){
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::USER);
     $data = Flight::request()->data->getData();
     $result = Flight::appointmentsService()->createAppointment($data);
@@ -54,7 +53,6 @@ Flight::route('POST /appointments', function(){
  * )
  */
 Flight::route('GET /admin/appointments', function() {
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $appointments = Flight::appointmentsService()->getAllAppointmentsForAdmin();
     Flight::json($appointments);

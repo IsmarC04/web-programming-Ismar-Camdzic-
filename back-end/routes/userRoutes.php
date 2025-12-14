@@ -58,7 +58,7 @@ Flight::route('POST /login', function(){
     $email = $data['email'] ?? null;
     $password = $data['password'] ?? null;
     $result = Flight::userService()->login($email, $password);
-    Flight::json($result);
+    Flight::json($result, $result['success'] ? 200 : 401);
 });
 
 /**

@@ -24,7 +24,6 @@
  * )
  */
 Flight::route('GET /admin/user', function(){
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     
     Flight::json(Flight::userService()->get_all_user());
@@ -55,7 +54,6 @@ Flight::route('GET /admin/user', function(){
  * )
  */
 Flight::route('GET /admin/user/@id', function($id) {
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     Flight::json(Flight::userService()->get_user_by_id($id));
 });
@@ -93,7 +91,6 @@ Flight::route('GET /admin/user/@id', function($id) {
  * )
  */
 Flight::route('DELETE /admin/user/@id', function($id){
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $result = Flight::userService()->delete_user_by_id($id);
     Flight::json($result);
@@ -117,7 +114,6 @@ Flight::route('DELETE /admin/user/@id', function($id){
  * )
  */
 Flight::route('GET /admin/appointments', function(){
-    Flight::auth_middleware()->verifyToken(Flight::request()->headers['Authorization'] ?? null);
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $appointments = Flight::appointmentService()->getAllAppointmentsForAdmin();
     Flight::json($appointments);

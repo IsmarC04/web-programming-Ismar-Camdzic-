@@ -18,34 +18,44 @@
 >
   <h2>Login</h2>
   <div id="loginMessage"></div>
-  <label for="email">Email:</label><br />
-  <input
-    type="email"
-    id="email"
-    placeholder="your@email.com"
-    style="padding: 8px; width: 100%; margin: 10px 0"
-  /><br />
-  <label for="password">Password:</label><br />
-  <input
-    type="password"
-    id="password"
-    placeholder="your password"
-    style="padding: 8px; width: 100%; margin: 10px 0"
-  /><br /><br />
-  <button
-    id="loginBtn"
-    style="
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    "
-  >
-    Login</button
-  ><br /><br />
+  <form id="login-form">
+    <label for="email">Email:</label><br />
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="your@email.com"
+      style="padding: 8px; width: 100%; margin: 10px 0"
+    /><br />
+    <label for="password">Password:</label><br />
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="your password"
+      style="padding: 8px; width: 100%; margin: 10px 0"
+    /><br /><br />
+    <button
+      id="loginBtn"
+      type="submit"
+      style="
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      "
+    >
+      Login
+    </button>
+  </form>
+  <br /><br />
   <p style="text-align: center">
     Nemate račun? <a href="#register">Sign up</a>
   </p>
 </div>
+
+<script>
+  UserService.init();
+</script>

@@ -12,12 +12,17 @@
  * @OA\Server(
  * url=BASE_URL,
  * description="Lokalni API server"
- * ),
+ * )
+ */
+
+/**
  * @OA\SecurityScheme(
- * securityScheme="ApiKey",
- * type="apiKey",
- * in="header",
- * name="Authentication"
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     in="header",
+ *     name="Authorization",
+ *     scheme="bearer",
+ *     bearerFormat="JWT",
  * )
  */
 

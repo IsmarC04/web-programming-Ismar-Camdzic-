@@ -1,5 +1,4 @@
 <?php
-
 require 'vendor/autoload.php';
 
 
@@ -26,7 +25,6 @@ error_reporting(E_ALL);
 
 
 
-
 Flight::register('userService', 'userService');
 Flight::register('appointmentsService', 'appointmentsService');
 Flight::register('stylistService', 'stylistService');
@@ -34,7 +32,10 @@ Flight::register('servicesService', 'servicesService');
 Flight::register('auth_middleware', 'AuthMiddleware');
 
 
-Flight::route('/*', function() {
+
+
+
+Flight::before('start', function() {
    if(
        strpos(Flight::request()->url, '/login') === 0 ||
        strpos(Flight::request()->url, '/register') === 0
@@ -42,7 +43,14 @@ Flight::route('/*', function() {
        return TRUE;
    } else {
        try {
-           $token = Flight::request()->getHeader("Authentication");
+            $header = apache_request_headers();
+
+            if(isset($header['Authorization'])) {
+                $token =  str_replace('Bearer ', '', $header['Authorization']);
+            } else {
+                $token = '';
+            }
+            
            if(Flight::auth_middleware()->verifyToken($token))
                return TRUE;
             
