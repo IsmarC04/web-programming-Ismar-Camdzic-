@@ -87,6 +87,7 @@ Flight::route('POST /login', function(){
  * )
  */
 Flight::route('PUT /users/@id/password', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::USER);
     $data = Flight::request()->data->getData();
     $result = Flight::userService()->changePassword($id, $data['new_password'] ?? '');
     Flight::json($result);
@@ -115,6 +116,7 @@ Flight::route('PUT /users/@id/password', function($id){
  * )
  */
 Flight::route('GET /users/@id', function($id){
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $result = Flight::userService()->getUserById($id);
     Flight::json($result);
 });
