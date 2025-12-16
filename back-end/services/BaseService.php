@@ -32,6 +32,10 @@ class BaseService{
     public function delete($id){
         return $this->dao->delete($id);
     }
+
+    public function add($data){
+    return $this->dao->insert($data);
+}
 }
 
 ?>

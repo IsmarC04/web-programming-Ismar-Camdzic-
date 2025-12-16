@@ -1,11 +1,10 @@
 
 	<head>
-		
         <style>
-            input{
-                width:30%;
-                height: 40px;
-                padding: 10px;
+        input{
+            width:30%;
+            height: 40px;
+            padding: 10px;
             }
 
             select{
@@ -17,51 +16,23 @@
 	</head>
 	
                         <div class="form" style="text-align: center;">
-                            <h2 style="margin-top: 10px;">Booking Page</h2>
-                            <label for="barber"><h6>Odaberi frizera:</h6></label>
-                                <select id="barber">
-                                    <option>Ismar Camdzic</option>
-                                    <option>Ajdin</option>
-                                    <option>Armin Delic-Husic</option>
-                                </select>
+  <h2 style="margin-top: 10px;">Booking Page</h2>
 
-                                <br><br>
+  <label for="usluga"><h6>Odaberi uslugu:</h6></label>
+  <select id="usluga">
+    <option value="">-- Odaberi --</option>
+  </select><br><br>
 
-                            <label for="termin"><h6>Odaberi termin:</h6></label>
-                            <input id="termin" type="date"><br><br>
+  <label for="barber"><h6>Odaberi frizera:</h6></label>
+  <select id="barber">
+    <option value="">-- Odaberi --</option>
+  </select><br><br>
 
-                               <label for="usluga"><h6>Odaberi uslugu:</h6></label>
-                            <select id="usluga">
-                                    <option>Classsic fade</option>
-                                    <option>Textured crop</option>
-                                    <option>Pompadour</option>
-                                    <option>Buzz Cut</option>
-                                    <option>full beard trim</option>
-                                    <option>Beard fade</option>
-                                </select>
+  <label for="termin"><h6>Odaberi termin:</h6></label>
+  <input id="termin" type="datetime-local" /><br><br>
 
-                                <br><br>
+  <button id="bookingBtn" type="submit">Rezervisi</button>
+</div>
 
-                                <button type="submit" style="margin-bottom: 10px;">Rezervisi</button>
-								
-
-                            
-                           
-
-
-                            </div>
-
-
-
-
-
-
-                            
-         
-
-			
-			
-	
-
-	</body>
+</body>
 </html>
