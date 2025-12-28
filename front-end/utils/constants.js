@@ -1,16 +1,18 @@
-const PRODUCTION_BASE =
-  "https://web-programming-ismar-camdzic.onrender.com/back-end/";
+const PRODUCTION_HOST = "https://web-programming-ismar-camdzic.onrender.com";
+// set to 'back-end' if your API is served at /back-end/; set to '' if API is at site root '/'
+const BACKEND_SUBPATH = "back-end";
 
 let Constants = {
   PROJECT_BASE_URL:
     location.hostname == "localhost"
       ? "http://localhost/web-programming-Ismar-Camdzic-/back-end/"
-      : PRODUCTION_BASE,
+      : PRODUCTION_HOST + "/",
+  BACKEND_SUBPATH,
   USER_ROLE: "user",
   ADMIN_ROLE: "admin",
   getApiUrl(path = "") {
-    // ensure exactly one trailing slash on base and no leading slash on path
     const base = String(this.PROJECT_BASE_URL).replace(/\/+$/, "") + "/";
-    return base + String(path).replace(/^\/+/, "");
+    const sub = String(this.BACKEND_SUBPATH || "").replace(/^\/+|\/+$/g, "");
+    return base + (sub ? sub + "/" : "") + String(path).replace(/^\/+/, "");
   },
 };
