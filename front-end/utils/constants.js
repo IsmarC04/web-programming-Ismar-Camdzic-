@@ -1,6 +1,6 @@
 const PRODUCTION_HOST = "https://web-programming-ismar-camdzic.onrender.com";
 // set to 'back-end' if your API is served at /back-end/; set to '' if API is at site root '/'
-const BACKEND_SUBPATH = "back-end";
+const BACKEND_SUBPATH = ""; // <-- changed to empty because routes in backend are at root
 
 let Constants = {
   PROJECT_BASE_URL:

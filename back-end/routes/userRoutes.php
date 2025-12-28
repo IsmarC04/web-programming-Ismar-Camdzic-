@@ -195,4 +195,14 @@ Flight::route('GET /users/@id', function($id) {
     Flight::json(Flight::userService()->get_user_by_id($id));
 });
 
+// Health check for root so https://your-app.onrender.com returns 200
+Flight::route('GET /', function(){
+    Flight::json(['success' => true, 'message' => 'API is running']);
+});
+
+// Optional health check if someone pings /back-end/
+Flight::route('GET /back-end/', function(){
+    Flight::json(['success' => true, 'message' => 'API is running (back-end path)']);
+});
+
 ?>
