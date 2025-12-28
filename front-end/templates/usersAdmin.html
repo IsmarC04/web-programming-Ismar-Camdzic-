@@ -1,4 +1,20 @@
-<div style="text-align: center;">
-	 <h2>USERS</h2>
-    <h2>Jos nema korisnika</h2>
+<div class="container mt-4">
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>USER ID</th>
+        <th>FIRST NAME</th>
+        <th>LAST NAME</th>
+        <th>EMAIL</th>
+        <th>ROLE</th>
+        <th>AKCIJA</th>
+      </tr>
+    </thead>
+
+    <tbody id="usersList"></tbody>
+  </table>
 </div>
+
+<script>
+  UserList.init();
+</script>

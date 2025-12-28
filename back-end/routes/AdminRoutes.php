@@ -26,7 +26,7 @@
 Flight::route('GET /admin/user', function(){
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     
-    Flight::json(Flight::userService()->get_all_user());
+    Flight::json(Flight::userService()->getAllUsers());
 });
 
 /**

@@ -7,19 +7,18 @@ class appointmentsDao extends BaseDao {
         parent::__construct("appointments");
     }
 
-    // CREATE APPOINTMENT
+    
     public function createAppointment($data) {
        return $this->insert([
         "user_id"    => $data["user_id"],
         "service_id" => $data["service_id"],
         "stylist_id" => $data["stylist_id"],
-        "admin_id"   => $data["admin_id"],
         "date" => $data["date"]
-]);
+    ]);
 
     }
 
-    // GET ALL APPOINTMENTS FOR ADMIN
+    
     public function getAllAppointmentsForAdmin() {
     $stm = $this->connection->prepare("SELECT * FROM appointments");
     $stm->execute();
@@ -43,6 +42,19 @@ class appointmentsDao extends BaseDao {
     public function getByStylist($stylist_id){
         $stm = $this->connection->prepare("SELECT * FROM appointments WHERE stylist_id = :stylist_id");
         $stm->bindParam(":stylist_id", $stylist_id);
+        $stm->execute();
+        return $stm->fetchAll();
+    }
+
+
+    public function getAllAppoinmentsWithDetails(){
+        $stm = $this->connection->prepare("select a.id, u.first_name, u.last_name, s.name as service_name, st.name as stylist_name, a.date
+            from appointments a 
+            left join users u on u.id = a.user_id
+            left join services s  on s.id = a.service_id
+            left join  stylists st on st.id = a.stylist_id
+            where a.date >= CURDATE()
+            order by a.date desc");
         $stm->execute();
         return $stm->fetchAll();
     }

@@ -1,38 +1,54 @@
+<head>
+  <style>
+    input {
+      width: 30%;
+      height: 40px;
+      padding: 10px;
+    }
 
-	<head>
-        <style>
-        input{
-            width:30%;
-            height: 40px;
-            padding: 10px;
-            }
+    #usluga {
+      width: 30%;
+      height: 40px;
+      padding: 10px;
+      margin-left: 35%;
+    }
 
-            select{
-                width: 30%;
-                height: 40px;
-                padding: 10px;
-            }
-        </style>
-	</head>
-	
-                        <div class="form" style="text-align: center;">
-  <h2 style="margin-top: 10px;">Booking Page</h2>
+    #barber {
+      width: 30%;
+      height: 40px;
+      padding: 10px;
+      margin-left: 35%;
+    }
+  </style>
+</head>
+<form id="booking-form">
+  <div class="form" style="text-align: center">
+    <h2 style="margin-top: 10px">Booking Page</h2>
+    <label for="usluga"><h6>Odaberi uslugu:</h6></label>
 
-  <label for="usluga"><h6>Odaberi uslugu:</h6></label>
-  <select id="usluga">
-    <option value="">-- Odaberi --</option>
-  </select><br><br>
+    <select id="usluga" name="service_id">
+      <option>odaberi</option>
+      <option value="7">Classic fade</option>
+      <option value="8">Textured crop</option>
+      <option value="9">Pompadour</option>
+      <option value="10">Buzz Cut</option>
+      <option value="11">Full beard trim</option>
+      <option value="12">Beard fade</option></select
+    ><br /><br />
 
-  <label for="barber"><h6>Odaberi frizera:</h6></label>
-  <select id="barber">
-    <option value="">-- Odaberi --</option>
-  </select><br><br>
+    <label for="barber"><h6>Odaberi frizera:</h6></label>
+    <select id="barber" name="stylist_id">
+      <option>odaberi</option>
+      <option value="7">Camdzic Ismar</option>
+      <option value="8">Ajdin</option>
+      <option value="9">Armin Delic-Husic</option></select
+    ><br /><br />
 
-  <label for="termin"><h6>Odaberi termin:</h6></label>
-  <input id="termin" type="datetime-local" /><br><br>
-
-  <button id="bookingBtn" type="submit">Rezervisi</button>
-</div>
-
-</body>
-</html>
+    <label for="termin"><h6>Odaberi termin:</h6></label>
+    <input id="termin" name="date" type="datetime-local" /><br /><br />
+    <button id="bookingBtn" type="submit">Rezervisi</button>
+  </div>
+</form>
+<script>
+  BookingService.init();
+</script>

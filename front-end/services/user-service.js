@@ -1,6 +1,6 @@
-var UserService = {
+const UserService = {
   init: function () {
-    var token = localStorage.getItem("user_token");
+    let token = localStorage.getItem("user_token");
     if (token && token !== undefined) {
       window.location.replace("index.html");
     }
@@ -28,6 +28,7 @@ var UserService = {
       success: function (result) {
         console.log(result);
         localStorage.setItem("user_token", result.token);
+        localStorage.setItem("user", UserService.parseJwt(result.token));
         window.location.replace("index.html");
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -36,6 +37,61 @@ var UserService = {
         );
       },
     });
+  },
+
+  getMyUser: function () {
+    var usertoken = JSON.parse(localStorage.getItem("user"));
+    RestClient.get(
+      `users/${usertoken.user.id}`,
+      (response) => {
+        const user = response;
+        $("#first_name").val(user.first_name);
+        $("#last_name").val(user.last_name);
+        $("#email").val(user.email);
+      },
+      (error) => {
+        toastr.error("Failed to load barber details");
+      }
+    );
+  },
+
+  isUserAdmin: function () {
+    var user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      return false;
+    } else {
+      return user.user.role == "admin";
+    }
+  },
+
+  editUser: function (data) {
+    var usertoken = JSON.parse(localStorage.getItem("user"));
+    RestClient.put(
+      `users/${usertoken.user.id}`,
+      data,
+      (response) => {
+        toastr.success("User updated  successfuly");
+      },
+      (error) => {
+        toastr.error("Failed to load barber details");
+      }
+    );
+  },
+
+  parseJwt: function (token) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return jsonPayload;
   },
 
   register: function (entity) {
