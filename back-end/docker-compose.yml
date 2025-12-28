@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "10000:10000"
+    environment:
+      - DATABASE_HOST=${DATABASE_HOST:-db}
+      - DATABASE_PORT=${DATABASE_PORT:-5432}
+      - DATABASE_DB=${DATABASE_DB:-app_db}
+      - DATABASE_USER=${DATABASE_USER:-app_user}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:-password}
+      - PORT=10000
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html:cached
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DATABASE_DB:-app_db}
+      POSTGRES_USER: ${DATABASE_USER:-app_user}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

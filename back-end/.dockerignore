@@ -1,0 +1,7 @@
+.git
+node_modules
+vendor
+.vscode
+.env
+.DS_Store
+README.md
