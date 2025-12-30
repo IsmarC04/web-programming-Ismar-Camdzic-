@@ -47,32 +47,82 @@ class stylistService extends BaseService {
         $this->update($id, $hashed);
     }
 
-    public function createStylist($name, $email, $password){
+    public function createStylist($name, $bio){
         $check = $this -> validateName($name);
         if(!$check['success']) return $check;
 
-
-        $check = $this -> validateEmail($email);
-        if(!$check['success']) return $check;
-
-        $check = $this -> validatePassword($password);
-        if(!$check['success']) return $check;
-
+        $check = $this -> validateName($bio);
+        if(!$check['success']) return $bio;
 
 
         $this->create([
             'name' => $name,
-            'email' => $email,
-            'password' => $password
+            'bio' => $bio,
         ]);
 
         return [
             'success' => true,
-            'message' => 'New service is registered.'
+            'message' => 'Stylist created successfully'
         ];
 
 
         
+    }
+
+    public function deleteStylist($id){
+        if(!is_numeric($id)){
+            return [
+                'success' => false,
+                'message' => "invalid ID"
+            ];
+        }
+
+        $deleted = $this->delete($id);
+
+        if($deleted){
+            return [
+                'success' => true,
+                'message' => "Stylist deleted successfully"
+            ];
+        }else {
+            return[
+                'success' => false,
+                'message' => "Stylist not found"
+            ];
+        }
+    }
+
+
+    public function getStylistById($id){
+        $stylist = $this->dao->getById($id);
+
+        
+
+        if(!$stylist){
+            return ['success' => false, 'message' => 'Stylist not found'];
+        }
+        
+        
+        return[
+            'success' => true,
+            'data' => $stylist
+        ];
+    }
+
+    public function getAllStylists(){
+        $stylist = $this->dao->getAll();
+
+        
+
+        if(!$stylist){
+            return ['success' => false, 'message' => 'Stylist not found'];
+        }
+        
+        
+        return[
+            'success' => true,
+            'data' => $stylist
+        ];
     }
 
 }

@@ -50,6 +50,64 @@ class servicesService extends BaseService{
 
 
     }
+
+    public function deleteService($id){
+        if(!is_numeric($id)){
+            return [
+                'success' => false,
+                'message' => "invalid ID"
+            ];
+        }
+
+        $deleted = $this->delete($id);
+
+        if($deleted){
+            return [
+                'success' => true,
+                'message' => "Service deleted successfully"
+            ];
+        }else {
+            return[
+                'success' => false,
+                'message' => "Service not found"
+            ];
+        }
+    }
+
+    public function getAllServices(){
+        $services = $this->dao->getAll();
+
+        
+
+        if(!$services){
+            return ['success' => false, 'message' => 'Service not found'];
+        }
+        
+        
+        return[
+            'success' => true,
+            'data' => $service
+        ];
+    }
+
+    public function getServiceById($id){
+        $service = $this->dao->getById($id);
+
+        
+
+        if(!$service){
+            return ['success' => false, 'message' => 'Service not found'];
+        }
+        
+        
+        return[
+            'success' => true,
+            'data' => $service
+        ];
+    }
+
+
+    
 }
 
 ?>

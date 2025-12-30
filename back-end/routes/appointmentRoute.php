@@ -9,11 +9,11 @@
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
- *             required={"user_id", "service_id", "stylist_id", "admin_id", "date"},
+ *             required={"user_id", "service_id", "stylist_id","date"},
  *             @OA\Property(property="user_id", type="integer", example=5),
  *             @OA\Property(property="service_id", type="integer", example=2),
  *             @OA\Property(property="stylist_id", type="integer", example=3),
- *             @OA\Property(property="admin_id", type="integer", example=1),
+ *          
  *             @OA\Property(property="date", type="string", example="2025-12-17 14:00:00")
  *         )
  *     ),
@@ -56,5 +56,45 @@ Flight::route('GET /admin/appointments', function() {
     Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
     $appointments = Flight::appointmentsService()->getAllAppointmentsForAdmin();
     Flight::json($appointments);
+    
 });
-?>
+
+/**
+ * @OA\Delete(
+ *     path="/admin/appointments/{id}",
+ *     tags={"appointments"},
+ *     summary="Brisanje termina (samo za admina)",
+ *     description="Briše termin na osnovu ID-ja. Dostupno samo admin korisnicima.",
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID termina koji se briše",
+ *         @OA\Schema(type="integer", example=10)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Termin uspješno obrisan"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Termin nije pronađen"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Nedozvoljen pristup"
+ *     )
+ * )
+ */
+Flight::route('DELETE /admin/appointments/@id', function($id){
+
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    $success = Flight::appointmentsService()->delete($id);
+    
+    if($success){
+        Flight::json(['success'=>true,'message'=>'Appointment deleted successfully']);
+    } else {
+        Flight::json(['success'=>false,'message'=>'Appointment not found']);
+    }
+});

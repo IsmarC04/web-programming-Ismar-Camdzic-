@@ -7,3 +7,8 @@ The database is not connected — currently, a database image is shown as an exa
 
 
 <img width="1312" height="797" alt="image" src="https://github.com/user-attachments/assets/1f7c96a8-8f59-4117-bef3-d5df0c0e8dea" />
+
+
+LINK FOR THE WEB APPLICATION:
+https://web-programming-ismar-camdzic-1.onrender.com
+

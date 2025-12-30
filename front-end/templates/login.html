@@ -26,6 +26,7 @@
       name="email"
       placeholder="your@email.com"
       style="padding: 8px; width: 100%; margin: 10px 0"
+      required
     /><br />
     <label for="password">Password:</label><br />
     <input
@@ -34,6 +35,9 @@
       name="password"
       placeholder="your password"
       style="padding: 8px; width: 100%; margin: 10px 0"
+      required
+      minlength="8"
+      maxlength="50"
     /><br /><br />
     <button
       id="loginBtn"

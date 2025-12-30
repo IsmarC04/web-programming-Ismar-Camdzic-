@@ -66,6 +66,7 @@ Flight::route('POST /login', function(){
  * path="/users/{id}/password",
  * tags={"users"},
  * summary="Promjena lozinke korisnika po ID-u",
+ * security={{"bearerAuth":{}}},
  * @OA\Parameter(
  * name="id",
  * in="path",
@@ -87,37 +88,121 @@ Flight::route('POST /login', function(){
  * )
  */
 Flight::route('PUT /users/@id/password', function($id){
-    Flight::auth_middleware()->authorizeRole(Roles::USER);
+     Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+
+    Flight::auth_middleware()->authorizeCurrentUserOrAdmin($id);
+
     $data = Flight::request()->data->getData();
     $result = Flight::userService()->changePassword($id, $data['new_password'] ?? '');
     Flight::json($result);
 });
 
+
+
 /**
- * @OA\Get(
- * path="/users/{id}",
- * tags={"users"},
- * summary="Dohvaćanje korisnika po ID-u",
- * @OA\Parameter(
- * name="id",
- * in="path",
- * required=true,
- * description="ID korisnika",
- * @OA\Schema(type="integer", example=1)
- * ),
- * @OA\Response(
- * response=200,
- * description="Podaci korisnika"
- * ),
- * @OA\Response(
- * response=404,
- * description="Korisnik nije pronađen"
- * )
+ * @OA\Put(
+ *     path="/users/{id}",
+ *     tags={"users"},
+ *     summary="Ažuriranje korisnika po ID-u",
+ *     description="Omogućava korisniku ili adminu da ažurira korisničke podatke.",
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID korisnika koji se ažurira",
+ *         required=true,
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"name","status"},
+ *             @OA\Property(property="name", type="string", example="Jane Doe"),
+ *             @OA\Property(property="status", type="string", example="active")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Korisnik uspješno ažuriran",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=true),
+ *             @OA\Property(property="message", type="string", example="User updated successfully")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Korisnik nije pronađen",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="User not found")
+ *         )
+ *     )
  * )
  */
-Flight::route('GET /users/@id', function($id){
-    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
-    $result = Flight::userService()->getUserById($id);
-    Flight::json($result);
+Flight::route('PUT /users/@id', function($id){
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::auth_middleware()->authorizeCurrentUserOrAdmin($id);
+    $data = Flight::request()->data->getData(); // očekuje name i status iz frontend-a
+
+    $success = Flight::userService()->update($id, $data);
+
+    if($success){
+        Flight::json(['success'=>true,'message'=>'User updated successfully']);
+    } else {
+        Flight::json(['success'=>false,'message'=>'User not found']);
+    }
 });
+
+/**
+ * @OA\Get(
+ *     path="/users/{id}",
+ *     tags={"users"},
+ *     summary="Dohvati korisnika po ID-u",
+ *     description="Omogućava korisniku ili adminu da dohvatiti podatke korisnika po ID-u.",
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID korisnika",
+ *         required=true,
+ *         @OA\Schema(type="integer", example=1)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Korisnik pronađen",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=true),
+ *             @OA\Property(property="data", type="object",
+ *                 @OA\Property(property="id", type="integer", example=1),
+ *                 @OA\Property(property="name", type="string", example="Jane Doe"),
+ *                 @OA\Property(property="status", type="string", example="active")
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Korisnik nije pronađen",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="success", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="User not found")
+ *         )
+ *     )
+ * )
+ */
+Flight::route('GET /users/@id', function($id) {
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
+    Flight::auth_middleware()->authorizeCurrentUserOrAdmin($id);
+    Flight::json(Flight::userService()->get_user_by_id($id));
+});
+
+// Health check for root so https://your-app.onrender.com returns 200
+Flight::route('GET /', function(){
+    Flight::json(['success' => true, 'message' => 'API is running']);
+});
+
+// Optional health check if someone pings /back-end/
+Flight::route('GET /back-end/', function(){
+    Flight::json(['success' => true, 'message' => 'API is running (back-end path)']);
+});
+
 ?>

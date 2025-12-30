@@ -27,5 +27,21 @@ class AuthMiddleware {
        if (!in_array($permission, $user->permissions)) {
            Flight::halt(403, 'Access denied: permission missing');
        }
-   }   
+   }
+   public static function authorizeCurrentUserOrAdmin($resourceUserId) {
+        $user = Flight::get('user');
+
+        if (!$user) {
+            Flight::halt(401, 'Unauthorized');
+        }
+
+        if (isset($user->role) && $user->role === Roles::ADMIN) {
+            
+            return;
+        }
+
+        if (!isset($user->id) || (int)$user->id !== (int)$resourceUserId) {
+            Flight::halt(403, 'Access denied: cannot access other user data');
+        }
+    }
 }

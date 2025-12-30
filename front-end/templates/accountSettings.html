@@ -1,17 +1,40 @@
 <div style="text-align: center">
   <h2>Account Settings</h2>
-  <label for="firstName">First name:</label><br />
-  <input id="firstName" type="text" />
-  <br />
-  <br />
-  <label for="lastName">Last name:</label><br />
-  <input id="lastName" type="text" />
-  <br /><br />
-  <label for="email">Email:</label><br />
-  <input id="email" type="email" />
-  <br /><br />
-  <button id="updateBtn" type="button" class="btn btn-primary">
-    Update Profile
-  </button>
+  <form id="account-update-form">
+    <label for="first_name">First name:</label><br />
+    <input id="first_name" name="first_name" type="text" />
+    <br />
+    <br />
+    <label for="last_name">Last name:</label><br />
+    <input id="last_name" name="last_name" type="text" />
+    <br /><br />
+    <label for="email">Email:</label><br />
+    <input id="email" name="email" type="email" />
+    <br /><br />
+
+    <button
+      id="updateBtn"
+      style="
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      "
+    >
+      Update Profile
+    </button>
+  </form>
   <div id="message"></div>
 </div>
+
+<script>
+  $("#account-update-form").validate({
+    submitHandler: function (form) {
+      var entity = Object.fromEntries(new FormData(form).entries());
+      UserService.editUser(entity);
+    },
+  });
+  UserService.getMyUser();
+</script>
